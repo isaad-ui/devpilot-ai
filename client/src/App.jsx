@@ -4,7 +4,7 @@ import ModeSelector from "./components/ModeSelector.jsx";
 import CodeInput from "./components/CodeInput.jsx";
 import QuestionInput from "./components/QuestionInput.jsx";
 import ResultPanel from "./components/ResultPanel.jsx";
-import { EXAMPLES, MODE_INFO } from "./examples.js";
+import { getExample, MODE_INFO } from "./examples.js";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -20,8 +20,8 @@ export default function App() {
   const [streaming, setStreaming] = useState(false);
 
   function loadExample() {
-    const ex = EXAMPLES[mode];
-    setLanguage(ex.language);
+    // Uses the language currently selected; never switches it.
+    const ex = getExample(mode, language);
     setCode(ex.code);
     setQuestion(ex.question);
   }
