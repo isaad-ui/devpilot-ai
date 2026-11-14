@@ -16,6 +16,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState("");
+  const [resultMode, setResultMode] = useState("explain");
 
   function loadExample() {
     const ex = EXAMPLES[mode];
@@ -26,11 +27,13 @@ export default function App() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (loading) return;
     if (!code.trim()) {
       setError("Please paste some code first.");
       setAnswer("");
       return;
     }
+    setResultMode(mode);
     setLoading(true);
     setError("");
     try {
@@ -54,15 +57,15 @@ export default function App() {
     <div className="app">
       <Header />
       <main className="layout">
-        <form className="card" onSubmit={handleSubmit}>
+        <form className="card" onSubmit={handleSubmit} onKeyDown={(e) => { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") handleSubmit(e); }}>
           <ModeSelector mode={mode} onChange={setMode} />
           <CodeInput language={language} code={code} onLanguageChange={setLanguage} onCodeChange={setCode} onExample={loadExample} />
           <QuestionInput mode={mode} value={question} onChange={setQuestion} />
-          <button type="submit" className="primary" disabled={loading}>
+          <button type="submit" className="primary" disabled={loading} title="Ctrl+Enter">
             {loading ? "Working…" : MODE_INFO[mode].action}
           </button>
         </form>
-        <ResultPanel loading={loading} answer={answer} error={error} />
+        <ResultPanel mode={loading || answer || error ? resultMode : mode} loading={loading} answer={answer} error={error} />
       </main>
       <footer className="footer">
         AI suggestions can be wrong, so always verify them before use. Your code is sent to an AI provider; do not paste secrets.

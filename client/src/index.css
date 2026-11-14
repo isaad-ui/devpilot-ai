@@ -146,3 +146,30 @@ select:focus, textarea:focus { outline: none; border-color: var(--accent); box-s
 .answer th { background: var(--surface-2); font-family: var(--mono); font-size: .74rem; text-transform: uppercase; letter-spacing: .05em; }
 
 .footer { margin: 22px 0 0; padding-top: 14px; border-top: 1px solid var(--border); color: var(--muted); font-size: .78rem; }
+
+/* Refinements */
+.field-tools { display: inline-flex; gap: 14px; }
+.example-btn.muted { color: var(--muted); }
+.example-btn.muted:hover:not(:disabled) { color: var(--text); border-bottom-color: var(--text); }
+.example-btn:disabled { opacity: .4; cursor: not-allowed; }
+.fade-in { animation: fade-in .22s ease-out; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.result-mode { color: var(--text); }
+.result-actions { display: flex; align-items: center; gap: 10px; }
+.status { font-family: var(--mono); font-size: .68rem; text-transform: uppercase; letter-spacing: .07em; padding: 3px 7px; border: 1px solid currentColor; }
+.status-ok { color: #1a9e55; }
+.status-err { color: var(--danger); }
+.outputs { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 6px; }
+.outputs li { font-size: .88rem; color: var(--text); padding-left: 16px; position: relative; }
+.outputs li::before { content: ""; position: absolute; left: 0; top: .6em; width: 6px; height: 6px; background: var(--accent); }
+.empty { animation: fade-in .22s ease-out; }
+.codeblock { margin: 10px 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--code-bg); }
+.codeblock-head { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-bottom: 1px solid #2e2e2b; font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: #9a9a95; }
+.codeblock .secondary { color: #ececea; border-color: #4a4a46; padding: 3px 9px; font-size: .68rem; }
+.codeblock .secondary:hover { background: #ececea; color: #0a0a0a; }
+.codeblock pre { margin: 0; border-radius: 0; }
+.mode:active, .primary:active:not(:disabled), .ghost:active { transform: translateY(1px); }
+.mode, .primary { transition: background .15s, color .15s, border-color .15s, transform .08s; }
+@media (max-width: 1100px) and (min-width: 861px) { .app { padding: 0 16px 32px; } .card { padding: 18px; } }
+@media (max-width: 520px) { .app { padding: 0 12px 28px; } .card { padding: 16px; } .header { padding: 14px 0; } .badge { display: none; } }
+@media (prefers-reduced-motion: reduce) { .fade-in, .empty { animation: none; } }

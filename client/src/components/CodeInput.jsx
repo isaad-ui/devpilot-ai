@@ -33,7 +33,10 @@ export default function CodeInput({ language, code, onLanguageChange, onCodeChan
       <div className="field">
         <div className="field-head">
           <span id="code-label">Code</span>
-          <button type="button" className="example-btn" onClick={onExample}>Insert example</button>
+          <span className="field-tools">
+            <button type="button" className="example-btn" onClick={onExample} title="Fill the editor with a sample for the selected tool">Insert example</button>
+            <button type="button" className="example-btn muted" onClick={() => onCodeChange("")} disabled={!code} title="Remove all code from the editor">Clear</button>
+          </span>
         </div>
         <div className="editor" aria-labelledby="code-label">
           <Editor
@@ -47,7 +50,11 @@ export default function CodeInput({ language, code, onLanguageChange, onCodeChan
               minimap: { enabled: false },
               fontSize: 13,
               fontFamily: "JetBrains Mono, Consolas, monospace",
+              lineNumbers: "on",
               renderLineHighlight: "none",
+              bracketPairColorization: { enabled: true },
+              formatOnPaste: true,
+              padding: { top: 10, bottom: 10 },
               scrollBeyondLastLine: false,
               wordWrap: "on",
               automaticLayout: true,
