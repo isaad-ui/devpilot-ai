@@ -33,10 +33,10 @@ export default function CodeInput({ language, code, onLanguageChange, onCodeChan
       <div className="field">
         <div className="field-head">
           <span id="code-label">Code</span>
-          <span className="field-tools">
+          <div className="field-tools">
             <button type="button" className="example-btn" onClick={onExample} title="Fill the editor with a sample for the selected tool">Insert example</button>
             <button type="button" className="example-btn muted" onClick={() => onCodeChange("")} disabled={!code} title="Remove all code from the editor">Clear</button>
-          </span>
+          </div>
         </div>
         <div className="editor" aria-labelledby="code-label">
           <Editor

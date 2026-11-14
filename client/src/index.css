@@ -52,7 +52,7 @@ form.card { border-right: 1px solid var(--border-strong); }
 
 /* Form */
 .field { display: block; margin-top: 20px; }
-.field-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.field-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .field-head > span { margin-bottom: 0; }
 .field > span, .field-head > span, .label { display: block; font-family: var(--mono); font-size: .72rem; font-weight: 500; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 8px; }
 select, textarea {
@@ -148,7 +148,8 @@ select:focus, textarea:focus { outline: none; border-color: var(--accent); box-s
 .footer { margin: 22px 0 0; padding-top: 14px; border-top: 1px solid var(--border); color: var(--muted); font-size: .78rem; }
 
 /* Refinements */
-.field-tools { display: inline-flex; gap: 14px; }
+.field-tools { display: flex; align-items: center; gap: 0; }
+.field-tools .example-btn + .example-btn { margin-left: 12px; padding-left: 12px; border-left: 1px solid var(--border); border-radius: 0; line-height: 1; }
 .example-btn.muted { color: var(--muted); }
 .example-btn.muted:hover:not(:disabled) { color: var(--text); border-bottom-color: var(--text); }
 .example-btn:disabled { opacity: .4; cursor: not-allowed; }
