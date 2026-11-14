@@ -1,6 +1,27 @@
+import { useEffect, useState } from "react";
+import Editor from "@monaco-editor/react";
 import { LANGUAGES } from "../examples.js";
 
+const MAX_CODE = 20000;
+
+// Map our language names to Monaco language ids.
+const MONACO_LANG = { "c++": "cpp", "c#": "csharp", bash: "shell" };
+
+function usePrefersDark() {
+  const query = "(prefers-color-scheme: dark)";
+  const [dark, setDark] = useState(() => window.matchMedia(query).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const onChange = (e) => setDark(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return dark;
+}
+
 export default function CodeInput({ language, code, onLanguageChange, onCodeChange }) {
+  const dark = usePrefersDark();
+
   return (
     <>
       <label className="field">
@@ -9,11 +30,29 @@ export default function CodeInput({ language, code, onLanguageChange, onCodeChan
           {LANGUAGES.map((l) => <option key={l} value={l}>{l}</option>)}
         </select>
       </label>
-      <label className="field">
-        <span>Code</span>
-        <textarea className="code" value={code} onChange={(e) => onCodeChange(e.target.value)}
-          spellCheck={false} placeholder="Paste your code here" maxLength={20000} />
-      </label>
+      <div className="field">
+        <span id="code-label">Code</span>
+        <div className="editor" aria-labelledby="code-label">
+          <Editor
+            height="260px"
+            language={MONACO_LANG[language] ?? language}
+            theme={dark ? "vs-dark" : "light"}
+            value={code}
+            onChange={(v) => onCodeChange((v ?? "").slice(0, MAX_CODE))}
+            loading={<div className="state">Loading editor…</div>}
+            options={{
+              minimap: { enabled: false },
+              fontSize: 14,
+              scrollBeyondLastLine: false,
+              wordWrap: "on",
+              automaticLayout: true,
+              tabSize: 2,
+              ariaLabel: "Code",
+            }}
+          />
+        </div>
+        <p className="hint">{code.length.toLocaleString()} / {MAX_CODE.toLocaleString()} characters</p>
+      </div>
     </>
   );
 }

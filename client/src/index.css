@@ -67,3 +67,5 @@ textarea.code { font-family: ui-monospace, Consolas, monospace; font-size: .9rem
 .answer p { margin: 6px 0; white-space: pre-wrap; }
 .answer pre { background: var(--code-bg); color: var(--code-text); padding: 12px; border-radius: 8px; overflow-x: auto; font-size: .85rem; }
 .footer { margin-top: 20px; color: var(--muted); font-size: .85rem; text-align: center; }
+.editor { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.hint { color: var(--muted); font-size: .85rem; margin: 6px 0 0; }
