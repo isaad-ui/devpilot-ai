@@ -19,7 +19,7 @@ function usePrefersDark() {
   return dark;
 }
 
-export default function CodeInput({ language, code, onLanguageChange, onCodeChange }) {
+export default function CodeInput({ language, code, onLanguageChange, onCodeChange, onExample }) {
   const dark = usePrefersDark();
 
   return (
@@ -31,7 +31,10 @@ export default function CodeInput({ language, code, onLanguageChange, onCodeChan
         </select>
       </label>
       <div className="field">
-        <span id="code-label">Code</span>
+        <div className="field-head">
+          <span id="code-label">Code</span>
+          <button type="button" className="example-btn" onClick={onExample}>Insert example</button>
+        </div>
         <div className="editor" aria-labelledby="code-label">
           <Editor
             height="260px"

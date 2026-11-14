@@ -56,11 +56,8 @@ export default function App() {
       <main className="layout">
         <form className="card" onSubmit={handleSubmit}>
           <ModeSelector mode={mode} onChange={setMode} />
-          <CodeInput language={language} code={code} onLanguageChange={setLanguage} onCodeChange={setCode} />
+          <CodeInput language={language} code={code} onLanguageChange={setLanguage} onCodeChange={setCode} onExample={loadExample} />
           <QuestionInput mode={mode} value={question} onChange={setQuestion} />
-          <div className="examples">
-            <button type="button" className="link" onClick={loadExample}>Load an example</button>
-          </div>
           <button type="submit" className="primary" disabled={loading}>
             {loading ? "Working…" : MODE_INFO[mode].action}
           </button>
