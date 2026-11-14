@@ -44,9 +44,9 @@ function CodeBlock({ children }) {
   );
 }
 
-export default function ResultPanel({ mode, loading, answer, error }) {
+export default function ResultPanel({ mode, loading, streaming, answer, error }) {
   const info = MODE_INFO[mode];
-  const status = loading ? "running" : error ? "error" : answer ? "done" : "idle";
+  const status = loading ? "running" : streaming ? "streaming" : error ? "error" : answer ? "done" : "idle";
 
   return (
     <section className="card result-card" aria-live="polite">
@@ -55,9 +55,10 @@ export default function ResultPanel({ mode, loading, answer, error }) {
           Output <span className="result-mode">/ {info.label}</span>
         </h2>
         <div className="result-actions">
+          {status === "streaming" && <span className="status status-live">Generating</span>}
           {status === "done" && <span className="status status-ok">Done</span>}
           {status === "error" && <span className="status status-err">Failed</span>}
-          {status === "done" && <CopyButton getText={() => answer} label="Copy all" title="Copy the whole answer as Markdown" />}
+          {(status === "done" || (status === "error" && answer)) && <CopyButton getText={() => answer} label="Copy all" title="Copy the whole answer as Markdown" />}
         </div>
       </div>
 
@@ -71,15 +72,16 @@ export default function ResultPanel({ mode, loading, answer, error }) {
         </div>
       )}
 
-      {!loading && error && <div className="error" role="alert">{error}</div>}
-
-      {!loading && !error && answer && (
-        <div className="answer">
+      {!loading && answer && (
+        <div className={`answer${streaming ? " is-streaming" : ""}`}>
           <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ pre: CodeBlock }}>
             {answer}
           </ReactMarkdown>
+          {streaming && <span className="cursor" aria-hidden="true" />}
         </div>
       )}
+
+      {!loading && !streaming && error && <div className="error" role="alert">{error}</div>}
 
       {status === "idle" && (
         <div className="empty" key={mode}>

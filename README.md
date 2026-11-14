@@ -16,7 +16,7 @@ Beginners and busy developers often hit code they do not fully understand, an er
 - **Debug Code**: likely cause, why it happens, a suggested fix, and how to verify it. It asks for missing details instead of inventing a cause.
 - **Review Code**: findings grouped by severity (critical vs. optional).
 - Monaco code editor with syntax highlighting, line numbers, and light/dark theme.
-- Answers rendered as Markdown (lists, tables, code blocks), with a Copy button.
+- Answers stream in live as they are generated (Server-Sent Events) and render as Markdown (lists, tables, code blocks), with Copy buttons per code block and for the whole answer.
 - Example prompts for each tool; loading, empty, error, and success states; responsive layout.
 - Server-side validation, input limits, rate limiting, and safe error messages.
 
@@ -33,13 +33,13 @@ Beginners and busy developers often hit code they do not fully understand, an er
 ## Architecture
 
 ```
-Browser (React) --POST /api/assistant--> Express --> Anthropic API
+Browser (React) --POST /api/assistant/stream--> Express --> Anthropic API
       ^                                    |
-      +------------- { answer } -----------+
+      +------- streamed text chunks ---------+
 ```
 
 - The React app handles the user experience and sends `{ mode, language, code, question }`.
-- The Express server validates input, builds a mode-specific prompt (`server/prompts.js`), calls the provider (`server/ai.js`), and returns `{ answer }` or `{ error }`.
+- The Express server validates input, builds a mode-specific prompt (`server/prompts.js`), calls the provider (`server/ai.js`), and streams the answer back as Server-Sent Events (`POST /api/assistant/stream`), or returns `{ answer }` / `{ error }` from the non-streaming `POST /api/assistant`.
 - The API key exists only in the server environment. It is never sent to the browser.
 
 ```
@@ -115,7 +115,6 @@ Manual checklist (run before a release):
 - Answers are not verified and may be incorrect or incomplete.
 - Limits: 20,000 characters of code, 5,000 of question text; 10 requests per minute per IP.
 - The Monaco editor loads from a CDN at runtime, so it needs internet access.
-- Responses are not streamed; a long answer can take several seconds.
 - A request the provider declines (refusal) returns a plain error; no automatic model fallback.
 - Not deployed yet.
 
