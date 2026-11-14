@@ -76,11 +76,8 @@ Code you submit is sent to the AI provider to generate a response. Do not paste 
 - Input limit: 20,000 characters of code, 5,000 of question text.
 - Rate limit: 10 requests per minute per IP.
 - The Monaco editor is loaded from a CDN at runtime.
-- Not deployed yet; see Deployment below.
+- Not deployed yet; see the Deployment section.
 
-## License
-
-See [LICENSE](LICENSE).
 
 ## Deployment
 
@@ -89,3 +86,7 @@ See [LICENSE](LICENSE).
 3. Smoke test in a private window: one request per mode, an empty-input check, and confirm no key appears in page source or network responses.
 
 The editor loads Monaco from the jsDelivr CDN at runtime, so the browser needs internet access to it.
+
+## License
+
+See [LICENSE](LICENSE).
