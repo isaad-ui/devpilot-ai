@@ -17,9 +17,9 @@ export const EXAMPLES = {
 };
 
 export const MODE_INFO = {
-  explain: { label: "Explain Code", action: "Explain this code", questionLabel: "Question (optional)", questionHint: "Anything specific you want explained?" },
-  debug: { label: "Debug Code", action: "Find the problem", questionLabel: "Error message / what happened", questionHint: "Paste the exact error or traceback, and what you expected." },
-  review: { label: "Review Code", action: "Review this code", questionLabel: "Review focus (optional)", questionHint: "e.g. security, readability, performance" },
+  explain: { label: "Explain", blurb: "Understand what code does", action: "Explain this code", questionLabel: "Question (optional)", questionHint: "Anything specific you want explained?" },
+  debug: { label: "Debug", blurb: "Find and fix an error", action: "Find the problem", questionLabel: "Error message / what happened", questionHint: "Paste the exact error or traceback, and what you expected." },
+  review: { label: "Review", blurb: "Spot risks and improvements", action: "Review this code", questionLabel: "Review focus (optional)", questionHint: "e.g. security, readability, performance" },
 };
 
 export const LANGUAGES = ["python", "javascript", "typescript", "java", "c", "c++", "c#", "go", "rust", "php", "ruby", "sql", "bash", "html", "css"];
