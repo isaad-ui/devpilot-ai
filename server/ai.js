@@ -15,6 +15,18 @@ function getClient() {
   return client;
 }
 
+function refusal() {
+  const err = new Error("The AI provider declined this request.");
+  err.status = 422;
+  return err;
+}
+
+function empty() {
+  const err = new Error("The AI provider returned an empty response.");
+  err.status = 502;
+  return err;
+}
+
 export async function generateAssistantResponse({ mode, code, language, question }) {
   const { system, user } = buildPrompt({ mode, code, language, question });
   const response = await getClient().messages.create({
@@ -24,20 +36,29 @@ export async function generateAssistantResponse({ mode, code, language, question
     messages: [{ role: "user", content: user }],
   });
 
-  if (response.stop_reason === "refusal") {
-    const err = new Error("The AI provider declined this request.");
-    err.status = 422;
-    throw err;
-  }
+  if (response.stop_reason === "refusal") throw refusal();
   const text = response.content
     .filter((b) => b.type === "text")
     .map((b) => b.text)
     .join("\n")
     .trim();
-  if (!text) {
-    const err = new Error("The AI provider returned an empty response.");
-    err.status = 502;
-    throw err;
-  }
+  if (!text) throw empty();
   return text;
+}
+
+// Streams text deltas to onText as the model generates them. Resolves when done.
+export async function streamAssistantResponse({ mode, code, language, question }, onText, signal) {
+  const { system, user } = buildPrompt({ mode, code, language, question });
+  const stream = getClient().messages.stream(
+    { model: MODEL, max_tokens: 8000, system, messages: [{ role: "user", content: user }] },
+    { signal }
+  );
+  let received = false;
+  stream.on("text", (delta) => {
+    received = true;
+    onText(delta);
+  });
+  const final = await stream.finalMessage();
+  if (final.stop_reason === "refusal") throw refusal();
+  if (!received) throw empty();
 }

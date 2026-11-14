@@ -54,3 +54,22 @@ test("valid request without a key gives a safe 503", async () => {
   assert.equal(res.status, 503);
   assert.ok(!JSON.stringify(await res.json()).toLowerCase().includes("key="));
 });
+
+const postStream = (body) =>
+  fetch(`${base}/api/assistant/stream`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+test("stream: rejects invalid input with a JSON 400", async () => {
+  const res = await postStream({ mode: "nope", code: "x" });
+  assert.equal(res.status, 400);
+  assert.match(res.headers.get("content-type"), /json/);
+});
+
+test("stream: no key gives a safe JSON 503 before any stream starts", async () => {
+  const res = await postStream({ mode: "explain", code: "print(1)", language: "python" });
+  assert.equal(res.status, 503);
+  assert.match(res.headers.get("content-type"), /json/);
+});
