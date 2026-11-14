@@ -42,7 +42,9 @@ export default function CodeInput({ language, code, onLanguageChange, onCodeChan
             loading={<div className="state">Loading editor…</div>}
             options={{
               minimap: { enabled: false },
-              fontSize: 14,
+              fontSize: 13,
+              fontFamily: "JetBrains Mono, Consolas, monospace",
+              renderLineHighlight: "none",
               scrollBeyondLastLine: false,
               wordWrap: "on",
               automaticLayout: true,

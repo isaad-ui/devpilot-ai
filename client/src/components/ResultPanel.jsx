@@ -18,7 +18,7 @@ export default function ResultPanel({ loading, answer, error }) {
   return (
     <section className="card result-card" aria-live="polite">
       <div className="result-head">
-        <h2>Result</h2>
+        <h2>Output</h2>
         {answer && !loading && (
           <button type="button" className="secondary" onClick={copy}>{copied ? "Copied" : "Copy"}</button>
         )}
@@ -28,13 +28,9 @@ export default function ResultPanel({ loading, answer, error }) {
       {!loading && !error && answer && <div className="answer"><ReactMarkdown remarkPlugins={[remarkGfm]}>{answer}</ReactMarkdown></div>}
       {!loading && !error && !answer && (
         <div className="empty">
-          <div className="empty-icon" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" />
-            </svg>
-          </div>
-          <strong>Your answer will appear here</strong>
-          <p>Choose a tool, paste some code, and press the button. Not sure where to start? Try an example.</p>
+          <strong>No result yet</strong>
+          <p>Choose a tool, paste code on the left, and run it. The answer appears here.</p>
+          <div className="prompt">waiting for input<span className="cursor" aria-hidden="true" /></div>
         </div>
       )}
     </section>
