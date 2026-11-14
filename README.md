@@ -75,9 +75,17 @@ Code you submit is sent to the AI provider to generate a response. Do not paste 
 - Answers are not verified and may be incorrect or incomplete.
 - Input limit: 20,000 characters of code, 5,000 of question text.
 - Rate limit: 10 requests per minute per IP.
-- Plain textarea input (no syntax-highlighting editor yet).
-- Not yet deployed.
+- The Monaco editor is loaded from a CDN at runtime.
+- Not deployed yet; see Deployment below.
 
 ## License
 
 See [LICENSE](LICENSE).
+
+## Deployment
+
+1. **API** (any Node host). `render.yaml` is a ready Render Blueprint (root dir `server`, start `npm start`, health check `/api/health`). Set these in the host's secret settings, not in git: `AI_API_KEY`, `CLIENT_ORIGIN` (the exact deployed frontend origin, no trailing slash), and `TRUST_PROXY=1` when behind a proxy.
+2. **Frontend** (any static host). Root dir `client`, build `npm run build`, output `dist`. Set `VITE_API_URL` to the deployed API URL **before** building (Vite inlines it at build time).
+3. Smoke test in a private window: one request per mode, an empty-input check, and confirm no key appears in page source or network responses.
+
+The editor loads Monaco from the jsDelivr CDN at runtime, so the browser needs internet access to it.

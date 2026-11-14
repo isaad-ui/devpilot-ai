@@ -1,0 +1,19 @@
+# Render Blueprint for the API. The React client is deployed separately
+# (e.g. Vercel / Netlify / Render Static Site) from the client/ directory.
+services:
+  - type: web
+    name: devpilot-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: AI_API_KEY
+        sync: false          # set in the Render dashboard, never in git
+      - key: CLIENT_ORIGIN
+        sync: false          # your deployed frontend URL, e.g. https://devpilot.example.app
+      - key: TRUST_PROXY
+        value: "1"
+      - key: AI_MODEL
+        value: claude-sonnet-5-5

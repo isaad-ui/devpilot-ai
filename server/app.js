@@ -7,6 +7,9 @@ dotenv.config();
 
 const app = express();
 
+// Behind a hosting proxy (Render, etc.) so rate limiting sees the real client IP.
+if (process.env.TRUST_PROXY) app.set("trust proxy", Number(process.env.TRUST_PROXY));
+
 app.use(
   cors({
     origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
