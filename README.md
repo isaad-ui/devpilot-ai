@@ -15,9 +15,12 @@ Beginners and busy developers often hit code they do not fully understand, an er
 - **Explain Code**: beginner-friendly, step-by-step explanation that defines jargon.
 - **Debug Code**: likely cause, why it happens, a suggested fix, and how to verify it. It asks for missing details instead of inventing a cause.
 - **Review Code**: findings grouped by severity (critical vs. optional).
-- Monaco code editor with syntax highlighting, line numbers, and light/dark theme.
+- Monaco code editor with syntax highlighting for 15 languages (Python, JavaScript, TypeScript, Java, C, C++, C#, Go, Rust, PHP, Ruby, SQL, Bash, HTML, CSS), line numbers, a character counter, a Clear button, and light/dark theme.
+- **Insert example** fills in a realistic snippet (with a matching real error for Debug) in whichever language is selected.
 - Answers stream in live as they are generated (Server-Sent Events) and render as Markdown (lists, tables, code blocks), with Copy buttons per code block and for the whole answer.
-- Example prompts for each tool; loading, empty, error, and success states; responsive layout.
+- Each tool has its own output sections, shown in the empty state before you run it.
+- Keyboard shortcut: Ctrl/Cmd+Enter runs the selected tool. Tooltips on tools and actions.
+- Loading, empty, error, and success states; if a stream breaks, the partial answer is kept next to the error; responsive layout (desktop two-column, stacked on tablet and phone).
 - Server-side validation, input limits, rate limiting, and safe error messages.
 
 **Deliberately not included:** running user code, accounts, GitHub integration, file editing.
@@ -34,8 +37,8 @@ Beginners and busy developers often hit code they do not fully understand, an er
 
 ```
 Browser (React) --POST /api/assistant/stream--> Express --> Anthropic API
-      ^                                    |
-      +------- streamed text chunks ---------+
+      ^                                             |
+      +-------------- streamed text chunks ---------+
 ```
 
 - The React app handles the user experience and sends `{ mode, language, code, question }`.
@@ -44,7 +47,7 @@ Browser (React) --POST /api/assistant/stream--> Express --> Anthropic API
 
 ```
 server/  app.js (Express app)  index.js (listener)  routes.js  ai.js  prompts.js  server.test.js
-client/  src/App.jsx  src/components/{Header,ModeSelector,CodeInput,QuestionInput,ResultPanel}.jsx
+client/  src/App.jsx  src/examples.js  src/components/{Header,ModeSelector,CodeInput,QuestionInput,ResultPanel}.jsx
 ```
 
 ## Local setup
@@ -84,13 +87,14 @@ Automated (no AI calls, no key needed):
 cd server && npm test
 ```
 
-Covers the health endpoint, rejection of a bad mode, empty code, oversized code, malformed JSON, and the safe error when no key is configured.
+Eight tests cover the health endpoint, rejection of a bad mode, empty code, oversized code, malformed JSON, and the safe error when no key is configured, for both the standard and the streaming endpoints.
 
 Manual checklist (run before a release):
 
 | Test | Expected |
 |---|---|
-| Explain / Debug / Review with the built-in examples | Relevant, sectioned answer; Copy works |
+| Explain / Debug / Review with Insert example, in several languages | Example matches the selected language; answer streams in with sections; Copy works |
+| Clear button and Ctrl+Enter | Editor empties; shortcut runs the tool, and a second press is ignored while generating |
 | Submit empty code | Validation message, no request sent |
 | Code over 20,000 characters | Editor caps input; server rejects if bypassed |
 | Invalid API key | Friendly error, no secret or stack trace |
