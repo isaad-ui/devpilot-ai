@@ -14,6 +14,7 @@
   --code-bg: #0a0a0a;
   --code-text: #ececea;
   --radius: 4px;
+  --ok: #0f7a3a;
   --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) {
@@ -21,7 +22,7 @@
     --bg: #0a0a0a; --surface: #111111; --surface-2: #1a1a19; --border: #2e2e2b;
     --border-strong: #ececea; --text: #ececea; --muted: #a9a9a4;
     --accent: #4d7cff; --accent-hover: #7497ff; --accent-text: #0a0a0a;
-    --danger: #ff3b50; --danger-bg: #2a0f14; --code-bg: #000000;
+    --ok: #1fb766; --danger: #ff3b50; --danger-bg: #2a0f14; --code-bg: #000000;
   }
 }
 * { box-sizing: border-box; }
@@ -158,7 +159,7 @@ select:focus, textarea:focus { outline: none; border-color: var(--accent); box-s
 .result-mode { color: var(--text); }
 .result-actions { display: flex; align-items: center; gap: 10px; }
 .status { font-family: var(--mono); font-size: .68rem; text-transform: uppercase; letter-spacing: .07em; padding: 3px 7px; border: 1px solid currentColor; }
-.status-ok { color: #1a9e55; }
+.status-ok { color: var(--ok); }
 .status-err { color: var(--danger); }
 .outputs { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 6px; }
 .outputs li { font-size: .88rem; color: var(--text); padding-left: 16px; position: relative; }

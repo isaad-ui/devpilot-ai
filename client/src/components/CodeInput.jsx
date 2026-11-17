@@ -14,7 +14,7 @@ function defineThemes(monaco) {
     inherit: true,
     rules: [
       { token: "", foreground: "ECECEA" },
-      { token: "comment", foreground: "6E7681", fontStyle: "italic" },
+      { token: "comment", foreground: "7F8896", fontStyle: "italic" },
       { token: "keyword", foreground: "6B95FF" },
       { token: "string", foreground: "8FD3A4" },
       { token: "number", foreground: "F0A860" },
@@ -25,7 +25,7 @@ function defineThemes(monaco) {
     colors: {
       "editor.background": "#0A0A0A",
       "editor.foreground": "#ECECEA",
-      "editorLineNumber.foreground": "#5C5C58",
+      "editorLineNumber.foreground": "#80807B",
       "editorLineNumber.activeForeground": "#ECECEA",
       "editorCursor.foreground": "#4D7CFF",
       "editor.selectionBackground": "#4D7CFF55",
@@ -49,7 +49,7 @@ function defineThemes(monaco) {
     colors: {
       "editor.background": "#FFFFFF",
       "editor.foreground": "#0A0A0A",
-      "editorLineNumber.foreground": "#A3A3A0",
+      "editorLineNumber.foreground": "#73736E",
       "editorLineNumber.activeForeground": "#0A0A0A",
       "editorCursor.foreground": "#0047FF",
       "editor.selectionBackground": "#0047FF30",
