@@ -19,7 +19,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #0a0a0a; --surface: #111111; --surface-2: #1a1a19; --border: #2e2e2b;
-    --border-strong: #ececea; --text: #ececea; --muted: #9a9a95;
+    --border-strong: #ececea; --text: #ececea; --muted: #a9a9a4;
     --accent: #4d7cff; --accent-hover: #7497ff; --accent-text: #0a0a0a;
     --danger: #ff3b50; --danger-bg: #2a0f14; --code-bg: #000000;
   }
@@ -82,8 +82,8 @@ select:focus, textarea:focus { outline: none; border-color: var(--accent); box-s
 .mode:hover { background: var(--surface-2); }
 .mode .mode-title { font-weight: 650; font-size: .9rem; }
 .mode .mode-desc { font-size: .74rem; color: var(--muted); line-height: 1.35; }
-.mode[aria-pressed="true"] { background: var(--text); color: var(--bg); }
-.mode[aria-pressed="true"] .mode-desc { color: color-mix(in srgb, var(--bg) 70%, transparent); }
+.mode[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); }
+.mode[aria-pressed="true"] .mode-desc { color: color-mix(in srgb, var(--accent-text) 78%, transparent); }
 @media (max-width: 520px) {
   .modes { grid-template-columns: 1fr; }
   .mode { border-right: 0; border-bottom: 1px solid var(--border-strong); }
@@ -180,3 +180,10 @@ select:focus, textarea:focus { outline: none; border-color: var(--accent); box-s
 .answer .error { margin-top: 14px; }
 .answer.is-streaming > :last-child { margin-bottom: 0; }
 @media (prefers-reduced-motion: reduce) { .status-live::before { animation: none; } }
+
+/* Colour refinements */
+.editor { background: var(--bg); }
+.answer h2::before { content: ""; display: inline-block; width: 8px; height: 8px; background: var(--accent); margin-right: 9px; vertical-align: 1px; }
+.answer strong { color: var(--text); font-weight: 650; }
+.answer li::marker { color: var(--accent); }
+.answer code { color: var(--text); }
